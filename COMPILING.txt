@@ -1,0 +1,122 @@
+/*      
+  _____     ___ ____ 
+   ____|   |    ____|      PS2 Open Source Project
+  |     ___|   |____       
+  
+---------------------------------------------------------------------------
+
+    Copyright (C) 2008 - Neme & jimmikaelkael (www.psx-scene.com) 
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the Free McBoot License.
+    
+	This program and any related documentation is provided "as is"
+	WITHOUT ANY WARRANTIES, either express or implied, including, but not
+ 	limited to, implied warranties of fitness for a particular purpose. The
+ 	entire risk arising out of use or performance of the software remains
+ 	with you.
+   	In no event shall the author be liable for any damages whatsoever
+ 	(including, without limitation, damages to your hardware or equipment,
+ 	environmental damage, loss of health, or any kind of pecuniary loss)
+ 	arising out of the use of or inability to use this software or
+ 	documentation, even if the author has been advised of the possibility of
+ 	such damages.
+
+    You should have received a copy of the Free McBoot License along with
+    this program; if not, please report at psx-scene :
+    http://psx-scene.com/forums/freevast/
+
+---------------------------------------------------------------------------
+
+ How to compile FreeMcBoot ?
+
+---------------------------------------------------------------------------
+*/
+
+ 1.
+ First you need a builded PS2 toolchain, I suggest you this URL as tutorial
+ in case you have not:
+ http://lukasz.dk/playstation-2-programming/mingw-tutorial/
+ 
+ If your environment was already builded to compile uLE v4.30 and below, you
+ only need to follow step 3 to recompile your gsKit.
+ 
+ If your environment was already builded to compile uLE versions above 4.30,
+ all you need is to compile fmcb (step 5).
+
+ Make sure your $PS2DEV and $PS2SDK environment variables are defines in your
+ profile script (/etc/profile, should be already done)
+  
+ 
+ 2.
+ Then you need to checkout that you have latest zlib and libpng revisions
+ installed in your $PS2SDK/ports folder.
+ 
+ Log into MinGW using MSYS, 
+ Get them with svn :
+ 	svn co svn://svn.ps2dev.org/ps2/trunk/ps2sdk-ports/zlib $PS2DEV/src/ps2sdk-ports/zlib 
+ 	svn co svn://svn.ps2dev.org/ps2/trunk/ps2sdk-ports/libpng $PS2DEV/src/ps2sdk-ports/libpng 
+
+ go to the dir you get them and build (zlib first) & install :
+  	cd $PS2DEV/src/ps2sdk-ports/zlib
+  	make all
+  	make install
+  	cd $PS2DEV/src/ps2sdk-ports/libpng
+  	make all
+  	make install
+  
+ At this point zlib and libpng should now be installed in the right
+ directory which is $PS2SDK/ports
+ 
+ 
+ 3.
+ You also need the gsKit but without libjpg, libpng, libtiff support,
+ so if you haven't : 
+ 	svn co svn://svn.ps2dev.org/ps2/trunk/gsKit $PS2DEV/gsKit
+
+ If you were already using a modified gsKit for compiling uLE v4.30 and
+ lower, then you need to rebuild gsKit without support for libjpg,
+ libtiff, libpng and zlib.
+  
+ So if you need to build or rebuild your gsKit, replace some of the gsKit
+ sources files with ones found in
+ "Changed source for external projects/gsKit" (should be
+ MSYS_FOLDER/1.0/local/ps2dev/gsKit).
+ 
+ Copy fmcb sources folder in ps2sdk/samples folder 
+ (MSYS_FOLDER/1.0/local/ps2dev/ps2sdk/samples/fmcb)
+ 
+ And run the "recompile_gsKit_no_LIBpix.sh" bash script in
+ "Changed source for external projects" folder:
+ 	cd "$PS2SDK/samples/fmcb/Changed source for external projects"
+ 	chmod -x recompile_gsKit_no_LIBpix.sh
+ 	./recompile_gsKit_no_LIBpix.sh
+
+ At this point gsKit should now be properly installed.
+
+ 
+ 4.
+ Finally you'll need to install the modified libcdvd 1.15 by Hiryu & Sjeep
+ that you can find here (same changes as for compiling uLE are fine) :
+ http://ps2dev.org/ps2/Projects/Libraries/LIBCDVD:_CD+DVD_Filing_System_for_PS2
+ 
+ Extract files from archive to $PS2DEV/libcdvd folder (should be
+ MSYS_FOLDER/1.0/local/ps2dev/libcdvd).
+ 
+ Replace some of the libcdvd sources files with ones found in 
+ "Changed source for external projects/libcdvd".
+
+ Now you can build libcdvd :
+ 	cd $PS2DEV/libcdvd
+ 	make all   
+
+ 	
+ 5.	
+ To compile FreeMcBoot use :
+ 	cd $PS2SDK/samples/fmcb
+  	make all
+
+ "make clean" is not necessary before to recompile.
+ 
+ you will have a "bin" folder created in FreeMcBoot sources folder with
+ packed installer and configurator elfs in it. 
