@@ -39,7 +39,7 @@
 #define PAL				3
 
 typedef enum {
-	PAL_1920_1080_16,	
+	PAL_640_512_32,	
 	NTSC_640_448_32
 } gs_video_mode;
 
@@ -73,7 +73,7 @@ typedef struct
 } vmode_t __attribute__((aligned(16)));
 
 vmode_t vmodes[] = {
-	{PAL,  1920, 1080, 0, 16, 4},		
+	{PAL,  640, 512, 0, 32, 4},		
 	{NTSC, 640, 448, 0, 32, 4}	
 };
 
