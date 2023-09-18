@@ -3422,7 +3422,7 @@ return_fmcb:
 /**/			sprintf(c, "  Left Cursor: %s", fmcb->OSD_cursor[0]);
 			printXY(c, x, y, setting->color[3], TRUE, 0);
 			y += FONT_HEIGHT;
-/**/			sprintf(c, "  Rigth Cursor: %s", fmcb->OSD_cursor[1]);
+/**/			sprintf(c, "  Right Cursor: %s", fmcb->OSD_cursor[1]);
 			printXY(c, x, y, setting->color[3], TRUE, 0);
 			y += FONT_HEIGHT;
 /**/			sprintf(c, "  Top Delimiter: %s", fmcb->OSD_delimiter[0]);
